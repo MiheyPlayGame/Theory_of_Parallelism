@@ -25,3 +25,6 @@ Makefile
 *.swp
 *.swo
 *~
+
+# Other files
+/server.bat
