@@ -14,9 +14,6 @@ Makefile
 *.exe
 *.out
 *.app
-task 3/solver
-task 3/table
-task 3/integral
 
 # Object files
 *.o
