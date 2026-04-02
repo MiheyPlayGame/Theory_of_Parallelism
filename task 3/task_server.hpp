@@ -3,16 +3,12 @@
 #include <atomic>
 #include <condition_variable>
 #include <cstddef>
-#include <cstdint>
 #include <deque>
-#include <exception>
 #include <functional>
 #include <future>
 #include <mutex>
-#include <optional>
 #include <stdexcept>
 #include <thread>
-#include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -29,9 +25,6 @@ public:
         : worker_count_(worker_count == 0 ? 1 : worker_count)
     {
     }
-
-    TaskServer(const TaskServer &) = delete;
-    TaskServer &operator=(const TaskServer &) = delete;
 
     ~TaskServer()
     {
@@ -57,9 +50,6 @@ public:
             return;
 
         stopping_.store(true);
-        {
-            std::lock_guard<std::mutex> lk(mu_);
-        }
         cv_.notify_all();
 
         for (auto &t : workers_)
@@ -106,31 +96,10 @@ public:
         return fut.get();
     }
 
-    std::optional<T> try_request_result(id_type id)
-    {
-        std::shared_future<T> fut;
-        {
-            std::lock_guard<std::mutex> lk(mu_);
-            auto it = results_.find(id);
-            if (it == results_.end())
-                return std::nullopt;
-            fut = it->second;
-        }
-
-        if (fut.wait_for(std::chrono::seconds(0)) != std::future_status::ready)
-            return std::nullopt;
-        return fut.get();
-    }
     bool erase_result(id_type id)
     {
         std::lock_guard<std::mutex> lk(mu_);
         return results_.erase(id) != 0;
-    }
-
-    std::size_t results_size() const
-    {
-        std::lock_guard<std::mutex> lk(mu_);
-        return results_.size();
     }
 
 private:
