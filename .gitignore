@@ -29,3 +29,7 @@ Makefile
 # Other files
 /server.bat
 /"task 4"/log/
+/task 5/log/
+/task 5/benchmark_out/
+/task 5/2026-05-14 13-46-31.mp4
+/task 5/yolov8s-pose.pt
