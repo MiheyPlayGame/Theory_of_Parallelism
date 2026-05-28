@@ -1,0 +1,7 @@
+build/
+.deps/
+*.o
+*.nsys-rep
+*.qdrep
+
+cuda-keyring_1.1-1_all.deb
