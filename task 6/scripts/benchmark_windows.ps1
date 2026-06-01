@@ -1,0 +1,16 @@
+param(
+  [ValidateSet("host", "gpu", "multicore")]
+  [string]$Mode = "host",
+  [string]$Distro = "",
+  [string]$LinuxProjectPath = "/home/mihey/Theory_of_Parallelism/task 6"
+)
+
+$ErrorActionPreference = "Stop"
+
+$linuxCmd = "cd '$LinuxProjectPath' && ./scripts/benchmark.sh $Mode"
+
+if ([string]::IsNullOrWhiteSpace($Distro)) {
+  wsl.exe -- bash -lc $linuxCmd
+} else {
+  wsl.exe -d $Distro -- bash -lc $linuxCmd
+}
