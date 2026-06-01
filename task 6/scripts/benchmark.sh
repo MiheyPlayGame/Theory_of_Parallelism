@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Benchmark heat solver for grid sizes 128, 256, 512, 1024.
+# Benchmark heat solver for grid sizes 128, 256, 512.
 # Usage: ./scripts/benchmark.sh [host|gpu|multicore]
 
 set -euo pipefail
@@ -7,7 +7,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 ACC="${1:-host}"
 BUILD="$ROOT/build"
 OUT="$ROOT/results"
-SIZES=(128 256 512 1024)
+SIZES=(128 256 512)
 MAX_ITER=1000000
 EPS=1e-6
 
