@@ -138,7 +138,7 @@ static int solve_jacobi(double *u, double *v, int n, int max_iter, double eps,
 
 #pragma acc data create(u[0:n2], v[0:n2])
     {
-#pragma acc update device(u[0:n2])
+#pragma acc update device(u[0:n2], v[0:n2])
 
         double *cur = u;
         double *nxt = v;

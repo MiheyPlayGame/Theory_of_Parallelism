@@ -2,7 +2,7 @@ param(
   [ValidateSet("host", "gpu", "multicore")]
   [string]$Mode = "gpu",
   [int]$Size = 256,
-  [int]$Iters = 50,
+  [int]$Iters = 1000000,
   [string]$Distro = "",
   [string]$LinuxProjectPath = "/home/mihey/Theory_of_Parallelism/task 6"
 )

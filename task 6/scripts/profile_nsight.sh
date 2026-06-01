@@ -6,7 +6,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 ACC="${1:-gpu}"
 N="${2:-256}"
-ITERS="${3:-50}"
+ITERS="${3:-1000000}"
 OUT="$ROOT/results"
 
 mkdir -p "$OUT"
@@ -85,8 +85,15 @@ esac
 echo "Using nsys: $NSYS_BIN"
 echo "Profile args: ${NSYS_ARGS[*]}"
 
+PROFILE_LOG="$(mktemp)"
 "$NSYS_BIN" "${NSYS_ARGS[@]}" \
-  "$BIN" --size "$N" --max-iter "$ITERS" --eps 1e-6 --quiet
+  "$BIN" --size "$N" --max-iter "$ITERS" --eps 1e-6 --quiet 2>&1 | tee "$PROFILE_LOG"
+RUN_LINE="$(grep -E 'iterations=[0-9]+' "$PROFILE_LOG" | tail -1 || true)"
+rm -f "$PROFILE_LOG"
+if [[ -n "$RUN_LINE" ]]; then
+  echo "$RUN_LINE" > "$OUT/last_profile_timing.txt"
+  echo "Timing: $RUN_LINE"
+fi
 
 echo "Profile output prefix: $REPORT"
 for ext in nsys-rep qdrep sqlite; do

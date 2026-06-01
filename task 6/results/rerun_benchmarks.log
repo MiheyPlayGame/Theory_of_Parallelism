@@ -1,0 +1,50 @@
+Building build/heat_base_host with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=host -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=host -Minfo=accel -DHEAT_BASELINE=1 -o build/heat_base_host heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+     96, Generating implicit firstprivate(n)
+    105, Generating implicit firstprivate(n)
+Building build/heat_opt_host with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=host -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=host -Minfo=accel -o build/heat_opt_host heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+    147, Generating implicit firstprivate(n)
+Building build/heat_base_gpu with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=gpu -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=gpu -Minfo=accel -DHEAT_BASELINE=1 -o build/heat_base_gpu heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+     92, Generating copy(v[:n2],u[:n2]) [if not already present]
+     96, Generating present(nxt[:n2],cur[:n2])
+         Generating implicit firstprivate(n)
+         Generating NVIDIA GPU code
+         98, #pragma acc loop gang, vector(128) collapse(2) /* blockIdx.x threadIdx.x */
+         99,   /* blockIdx.x threadIdx.x collapsed */
+    105, Generating present(nxt[:n2],cur[:n2])
+         Generating implicit firstprivate(n)
+         Generating NVIDIA GPU code
+        107, #pragma acc loop gang, vector(128) collapse(2) /* blockIdx.x threadIdx.x */
+             Generating reduction(max:err)
+        108,   /* blockIdx.x threadIdx.x collapsed */
+    105, Generating implicit copy(err) [if not already present]
+Building build/heat_base_multicore with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=multicore -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=multicore -Minfo=accel -DHEAT_BASELINE=1 -o build/heat_base_multicore heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+     96, Generating Multicore code
+         98, #pragma acc loop gang
+    105, Generating Multicore code
+        107, #pragma acc loop gang
+             Generating reduction(max:err)
+Building build/heat_opt_multicore with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=multicore -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=multicore -Minfo=accel -o build/heat_opt_multicore heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+    147, Generating Multicore code
+        151, #pragma acc loop gang
+             Generating reduction(max:err)
+make: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+make: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+host base N=128: iterations=30074 error=9.999803e-07 time_sec=0.593328
+host opt N=128: iterations=30074 error=9.999803e-07 time_sec=0.663063
+host base N=256: iterations=102885 error=9.999302e-07 time_sec=7.582903
+host opt N=256: iterations=102885 error=9.999302e-07 time_sec=9.232416

@@ -1,0 +1,5 @@
+stage,label,time_sec,iterations,error,source
+1,baseline host,91.088336,339599,9.999842e-07,timing_host.csv variant=base N=512 (nvc++ run_all)
+2,opt host,112.242574,339599,9.999842e-07,timing_host.csv variant=opt N=512 (nvc++ run_all)
+3,opt gpu,60.519550,339599,9.999842e-07,timing_gpu.csv variant=opt N=512
+4,nsight profile gpu,67.380473,339599,9.999842e-07,nsys profile gpu 512 max-iter 1000000

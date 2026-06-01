@@ -32,3 +32,9 @@ cmake_install.cmake
 /task 5/benchmark_out/
 /task 5/2026-05-14 13-46-31.mp4
 /task 5/yolov8s-pose.pt
+
+# Nsight Systems (large profiles, do not commit)
+task 6/results/nsys*
+task 6/results/*.nsys-rep
+task 6/results/*.qdrep
+task 6/results/*.qdstrm

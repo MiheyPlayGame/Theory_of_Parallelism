@@ -1,0 +1,249 @@
+=== Compiler check ===
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+NVHPC_CXX=/home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++
+CXX=g++
+g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+=== Clean build (host, gpu, multicore) ===
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+rm -rf build results/*.dat results/*.png results/*.csv
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+Building build/heat_base_host with g++ -fopenacc
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib g++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -fopenacc -DHEAT_BASELINE=1 -o build/heat_base_host heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+Building build/heat_opt_host with g++ -fopenacc
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib g++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -fopenacc -o build/heat_opt_host heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+=== Verify 10x10 / 13x13 ===
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+=== 10x10 grid ===
+build/heat_opt_host --size 10 --eps 1e-6 --max-iter 1000000 | tee -a results/verify_10x10.txt
+variant=optimized N=10
+iterations=234 error=9.434872e-07 time_sec=0.001017
+
+--- grid 10x10 ---
+ 10.0000  11.1111  12.2222  13.3333  14.4444  15.5556  16.6667  17.7778  18.8889  20.0000
+ 11.1111  12.2222  13.3333  14.4444  15.5556  16.6667  17.7778  18.8889  20.0000  21.1111
+ 12.2222  13.3333  14.4444  15.5555  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222
+ 13.3333  14.4444  15.5555  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333
+ 14.4444  15.5556  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444
+ 15.5556  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5556
+ 16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5556  26.6667
+ 17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5555  26.6667  27.7778
+ 18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5556  26.6667  27.7778  28.8889
+ 20.0000  21.1111  22.2222  23.3333  24.4444  25.5556  26.6667  27.7778  28.8889  30.0000
+=== 13x13 grid ===
+build/heat_opt_host --size 13 --eps 1e-6 --max-iter 1000000 | tee -a results/verify_13x13.txt
+variant=optimized N=13
+iterations=402 error=9.843653e-07 time_sec=0.000322
+
+--- grid 13x13 ---
+ 10.0000  10.8333  11.6667  12.5000  13.3333  14.1667  15.0000  15.8333  16.6667  17.5000  18.3333  19.1667  20.0000
+ 10.8333  11.6667  12.5000  13.3333  14.1667  15.0000  15.8333  16.6667  17.5000  18.3333  19.1667  20.0000  20.8333
+ 11.6667  12.5000  13.3333  14.1667  15.0000  15.8333  16.6667  17.5000  18.3333  19.1667  20.0000  20.8333  21.6667
+ 12.5000  13.3333  14.1667  15.0000  15.8333  16.6666  17.5000  18.3333  19.1666  20.0000  20.8333  21.6667  22.5000
+ 13.3333  14.1667  15.0000  15.8333  16.6666  17.5000  18.3333  19.1666  20.0000  20.8333  21.6667  22.5000  23.3333
+ 14.1667  15.0000  15.8333  16.6666  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1667
+ 15.0000  15.8333  16.6667  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1667  25.0000
+ 15.8333  16.6667  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1667  25.0000  25.8333
+ 16.6667  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1666  25.0000  25.8333  26.6667
+ 17.5000  18.3333  19.1667  20.0000  20.8333  21.6666  22.5000  23.3333  24.1666  25.0000  25.8333  26.6667  27.5000
+ 18.3333  19.1667  20.0000  20.8333  21.6667  22.5000  23.3333  24.1667  25.0000  25.8333  26.6667  27.5000  28.3333
+ 19.1667  20.0000  20.8333  21.6667  22.5000  23.3333  24.1667  25.0000  25.8333  26.6667  27.5000  28.3333  29.1667
+ 20.0000  20.8333  21.6667  22.5000  23.3333  24.1667  25.0000  25.8333  26.6667  27.5000  28.3333  29.1667  30.0000
+=== Benchmark host ===
+make: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+Makefile:49: host build uses g++ OpenACC; install NVIDIA HPC SDK for -acc=host|gpu|multicore
+make: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+host base N=128: iterations=30074 error=9.999803e-07 time_sec=1.310120
+host opt N=128: iterations=30074 error=9.999803e-07 time_sec=0.656526
+host base N=256: iterations=102885 error=9.999302e-07 time_sec=18.410047
+host opt N=256: iterations=102885 error=9.999302e-07 time_sec=9.206634
+=== Compiler check ===
+NVHPC_CXX=/home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++
+CXX=/home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++
+
+=== Clean build (host, gpu, multicore) ===
+rm -rf build results/*.dat results/*.png results/*.csv
+make[1]: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+Building build/heat_base_host with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=host -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=host -Minfo=accel -DHEAT_BASELINE=1 -o build/heat_base_host heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+     96, Generating implicit firstprivate(n)
+    105, Generating implicit firstprivate(n)
+Building build/heat_opt_host with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=host -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=host -Minfo=accel -o build/heat_opt_host heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+    147, Generating implicit firstprivate(n)
+make[1]: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+make[1]: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+Building build/heat_base_gpu with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=gpu -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=gpu -Minfo=accel -DHEAT_BASELINE=1 -o build/heat_base_gpu heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+     92, Generating copy(v[:n2],u[:n2]) [if not already present]
+     96, Generating present(nxt[:n2],cur[:n2])
+         Generating implicit firstprivate(n)
+         Generating NVIDIA GPU code
+         98, #pragma acc loop gang, vector(128) collapse(2) /* blockIdx.x threadIdx.x */
+         99,   /* blockIdx.x threadIdx.x collapsed */
+    105, Generating present(nxt[:n2],cur[:n2])
+         Generating implicit firstprivate(n)
+         Generating NVIDIA GPU code
+        107, #pragma acc loop gang, vector(128) collapse(2) /* blockIdx.x threadIdx.x */
+             Generating reduction(max:err)
+        108,   /* blockIdx.x threadIdx.x collapsed */
+    105, Generating implicit copy(err) [if not already present]
+Building build/heat_opt_gpu with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=gpu -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=gpu -Minfo=accel -o build/heat_opt_gpu heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+    140, Generating create(u[:n2],v[:n2]) [if not already present]
+    143, Generating update device(u[:n2])
+    147, Generating present(nxt[:n2],cur[:n2])
+         Generating implicit firstprivate(n)
+         Generating NVIDIA GPU code
+        151, #pragma acc loop gang, vector(256) collapse(2) /* blockIdx.x threadIdx.x */
+             Generating reduction(max:err)
+        152,   /* blockIdx.x threadIdx.x collapsed */
+    147, Generating implicit copy(err) [if not already present]
+    172, Generating update self(u[:n2])
+make[1]: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+make[1]: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+Building build/heat_base_multicore with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=multicore -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=multicore -Minfo=accel -DHEAT_BASELINE=1 -o build/heat_base_multicore heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+     96, Generating Multicore code
+         98, #pragma acc loop gang
+    105, Generating Multicore code
+        107, #pragma acc loop gang
+             Generating reduction(max:err)
+Building build/heat_opt_multicore with /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -acc=multicore -Minfo=accel
+LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib:/usr/lib/wsl/lib /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/2026/compilers/bin/nvc++ -O3 -std=c++17 -I"/home/mihey/Theory_of_Parallelism/task 6/.deps/boost/usr/include" -acc=multicore -Minfo=accel -o build/heat_opt_multicore heat_solver.cpp .deps/boost2/usr/lib/x86_64-linux-gnu/libboost_program_options.a -pthread
+heat_solver.cpp:
+_INTERNAL_15_heat_solver_cpp_main::solve_jacobi(double*, double*, int, int, double, int&, double&):
+    147, Generating Multicore code
+        151, #pragma acc loop gang
+             Generating reduction(max:err)
+make[1]: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+=== Verify 10x10 / 13x13 ===
+make[1]: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+make[1]: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+=== 10x10 grid ===
+build/heat_opt_host --size 10 --eps 1e-6 --max-iter 1000000 | tee -a results/verify_10x10.txt
+variant=optimized N=10
+iterations=234 error=9.434872e-07 time_sec=0.000026
+
+--- grid 10x10 ---
+ 10.0000  11.1111  12.2222  13.3333  14.4444  15.5556  16.6667  17.7778  18.8889  20.0000
+ 11.1111  12.2222  13.3333  14.4444  15.5556  16.6667  17.7778  18.8889  20.0000  21.1111
+ 12.2222  13.3333  14.4444  15.5555  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222
+ 13.3333  14.4444  15.5555  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333
+ 14.4444  15.5556  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444
+ 15.5556  16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5556
+ 16.6667  17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5556  26.6667
+ 17.7778  18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5555  26.6667  27.7778
+ 18.8889  20.0000  21.1111  22.2222  23.3333  24.4444  25.5556  26.6667  27.7778  28.8889
+ 20.0000  21.1111  22.2222  23.3333  24.4444  25.5556  26.6667  27.7778  28.8889  30.0000
+=== 13x13 grid ===
+build/heat_opt_host --size 13 --eps 1e-6 --max-iter 1000000 | tee -a results/verify_13x13.txt
+variant=optimized N=13
+iterations=402 error=9.843653e-07 time_sec=0.000071
+
+--- grid 13x13 ---
+ 10.0000  10.8333  11.6667  12.5000  13.3333  14.1667  15.0000  15.8333  16.6667  17.5000  18.3333  19.1667  20.0000
+ 10.8333  11.6667  12.5000  13.3333  14.1667  15.0000  15.8333  16.6667  17.5000  18.3333  19.1667  20.0000  20.8333
+ 11.6667  12.5000  13.3333  14.1667  15.0000  15.8333  16.6667  17.5000  18.3333  19.1667  20.0000  20.8333  21.6667
+ 12.5000  13.3333  14.1667  15.0000  15.8333  16.6666  17.5000  18.3333  19.1666  20.0000  20.8333  21.6667  22.5000
+ 13.3333  14.1667  15.0000  15.8333  16.6666  17.5000  18.3333  19.1666  20.0000  20.8333  21.6667  22.5000  23.3333
+ 14.1667  15.0000  15.8333  16.6666  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1667
+ 15.0000  15.8333  16.6667  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1667  25.0000
+ 15.8333  16.6667  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1667  25.0000  25.8333
+ 16.6667  17.5000  18.3333  19.1666  20.0000  20.8333  21.6666  22.5000  23.3333  24.1666  25.0000  25.8333  26.6667
+ 17.5000  18.3333  19.1667  20.0000  20.8333  21.6666  22.5000  23.3333  24.1666  25.0000  25.8333  26.6667  27.5000
+ 18.3333  19.1667  20.0000  20.8333  21.6667  22.5000  23.3333  24.1667  25.0000  25.8333  26.6667  27.5000  28.3333
+ 19.1667  20.0000  20.8333  21.6667  22.5000  23.3333  24.1667  25.0000  25.8333  26.6667  27.5000  28.3333  29.1667
+ 20.0000  20.8333  21.6667  22.5000  23.3333  24.1667  25.0000  25.8333  26.6667  27.5000  28.3333  29.1667  30.0000
+=== Benchmark host ===
+make: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+make: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+host base N=128: iterations=30074 error=9.999803e-07 time_sec=0.545737
+host opt N=128: iterations=30074 error=9.999803e-07 time_sec=0.638853
+host base N=256: iterations=102885 error=9.999302e-07 time_sec=5.881552
+host opt N=256: iterations=102885 error=9.999302e-07 time_sec=8.959747
+host base N=512: iterations=339599 error=9.999842e-07 time_sec=91.088336
+host opt N=512: iterations=339599 error=9.999842e-07 time_sec=112.242574
+Wrote /home/mihey/Theory_of_Parallelism/task 6/results/timing_host.csv
+Saved /home/mihey/Theory_of_Parallelism/task 6/results/speedup_host.png
+=== Benchmark multicore ===
+make: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+make: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+multicore base N=128: iterations=30074 error=9.999803e-07 time_sec=0.971138
+multicore opt N=128: iterations=30074 error=9.999803e-07 time_sec=0.927124
+multicore base N=256: iterations=102885 error=9.999302e-07 time_sec=3.709513
+multicore opt N=256: iterations=102885 error=9.999302e-07 time_sec=3.522841
+multicore base N=512: iterations=339599 error=9.999842e-07 time_sec=44.435558
+multicore opt N=512: iterations=339599 error=9.999842e-07 time_sec=45.581426
+Wrote /home/mihey/Theory_of_Parallelism/task 6/results/timing_multicore.csv
+Saved /home/mihey/Theory_of_Parallelism/task 6/results/speedup_multicore.png
+=== Benchmark gpu ===
+make: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+make: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+gpu base N=128: iterations=30074 error=9.999803e-07 time_sec=2.642423
+gpu opt N=128: iterations=1000000 error=1.357861e+01 time_sec=141.670599
+gpu base N=256: iterations=102885 error=9.999302e-07 time_sec=19.164829
+gpu opt N=256: iterations=1000000 error=1.359217e+01 time_sec=168.960871
+gpu base N=512: iterations=339599 error=9.999842e-07 time_sec=67.921106
+gpu opt N=512: iterations=1000000 error=1.359891e+01 time_sec=182.179799
+Wrote /home/mihey/Theory_of_Parallelism/task 6/results/timing_gpu.csv
+Saved /home/mihey/Theory_of_Parallelism/task 6/results/speedup_gpu.png
+=== Nsight profile (gpu, N=512) ===
+make: Entering directory '/home/mihey/Theory_of_Parallelism/task 6'
+make: Leaving directory '/home/mihey/Theory_of_Parallelism/task 6'
+Using nsys: /home/mihey/.local/nvidia/hpc_sdk/Linux_x86_64/26.3/compilers/bin/nsys
+Profile args: profile --stats=true --sample=none --force-overwrite=true -o /home/mihey/Theory_of_Parallelism/task 6/results/nsys_N512_iter1000000_gpu --trace=cuda
+Collecting data...
+Generating '/tmp/nsys-report-a152.qdstrm'
+[1/6] [0%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [0%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [0%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=17%                        ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [13%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [====25%                     ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==20%                       ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=17%                        ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [14%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [12%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [11%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [10%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [9%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [8%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [7%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [6%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [5%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [0%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [5%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [6%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [7%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [8%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [9%                          ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [10%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [11%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [12%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [13%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [14%                         ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=15%                        ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=16%                        ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=17%                        ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==18%                       ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==19%                       ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==20%                       ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==21%                       ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [===22%                      ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [===23%                      ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [===24%                      ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [====25%                     ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [====26%                     ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [====27%                     ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [====28%                     ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=====29%                    ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=====30%                    ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=====31%                    ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=====32%                    ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [======33%                   ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [======34%                   ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [======35%                   ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=======36%                  ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=======37%                  ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=======38%                  ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=======39%                  ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [========40%                 ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [========41%                 ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [========42%                 ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=========43%                ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=========44%                ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=========45%                ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [=========46%                ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==========47%               ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==========48%               ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [==========49%               ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [===========50%              ] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [========================100%] nsys_N512_iter1000000_gpu.nsys-rep[1/6] [========================100%] nsys_N512_iter1000000_gpu.nsys-rep
+[2/6] [0%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [1%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [2%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [3%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [4%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [5%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [6%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [7%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [8%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [9%                          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [10%                         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [11%                         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [12%                         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [13%                         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [14%                         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=15%                        ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=16%                        ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=17%                        ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==18%                       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==19%                       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==20%                       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==21%                       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===22%                      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===23%                      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===24%                      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====25%                     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====26%                     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====27%                     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====28%                     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====29%                    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====30%                    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====31%                    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====32%                    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [======33%                   ] nsys_N512_iter1000000_gpu.sqlite[2/6] [======34%                   ] nsys_N512_iter1000000_gpu.sqlite[2/6] [======35%                   ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======36%                  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======37%                  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======38%                  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======39%                  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========40%                 ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========41%                 ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========42%                 ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=========43%                ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=========44%                ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=========45%                ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=========46%                ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==========47%               ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==========48%               ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==========49%               ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===========50%              ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===========51%              ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===========52%              ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===========53%              ] nsys_N512_iter1000000_gpu.sqlite[2/6] [============54%             ] nsys_N512_iter1000000_gpu.sqlite[2/6] [============55%             ] nsys_N512_iter1000000_gpu.sqlite[2/6] [============56%             ] nsys_N512_iter1000000_gpu.sqlite[2/6] [============57%             ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=============58%            ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=============59%            ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=============60%            ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==============61%           ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==============62%           ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==============63%           ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==============64%           ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===============65%          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===============66%          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===============67%          ] nsys_N512_iter1000000_gpu.sqlite[2/6] [================68%         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [================69%         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [================70%         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [================71%         ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=================72%        ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=================73%        ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=================74%        ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==================75%       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==================76%       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==================77%       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [==================78%       ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===================79%      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===================80%      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===================81%      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [===================82%      ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====================83%     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====================84%     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [====================85%     ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====================86%    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====================87%    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====================88%    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=====================89%    ] nsys_N512_iter1000000_gpu.sqlite[2/6] [======================90%   ] nsys_N512_iter1000000_gpu.sqlite[2/6] [======================91%   ] nsys_N512_iter1000000_gpu.sqlite[2/6] [======================92%   ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======================93%  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======================94%  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======================95%  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [=======================96%  ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========================97% ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========================98% ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========================99% ] nsys_N512_iter1000000_gpu.sqlite[2/6] [========================100%] nsys_N512_iter1000000_gpu.sqlite[2/6] [========================100%] nsys_N512_iter1000000_gpu.sqlite
+[3/6] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls  Avg (ns)   Med (ns)   Min (ns)  Max (ns)  StdDev (ns)          Name        
+ --------  ---------------  ---------  ---------  ---------  --------  --------  -----------  --------------------
+     59.9      99695926952    3224965    30913.8    12487.0       254   3507780      52808.5  cuStreamSynchronize 
+     26.9      44851656267     806240    55630.7    35999.0     18852   5942034      63839.1  cuMemcpyDtoHAsync_v2
+      9.3      15519601727    1612482     9624.7     9055.0      4459   3511931       6425.8  cuLaunchKernel      
+      3.9       6464280617     806241     8017.8     6757.0      4152   3000210       5697.2  cuMemsetD32Async    
+      0.0          2713604          1  2713604.0  2713604.0   2713604   2713604          0.0  cuMemAllocHost_v2   
+      0.0          1596539          1  1596539.0  1596539.0   1596539   1596539          0.0  cuModuleLoadDataEx  
+      0.0          1573482          5   314696.4   344959.0      5550    868218     353419.7  cuMemAlloc_v2       
+      0.0           480598          1   480598.0   480598.0    480598    480598          0.0  cuMemcpyHtoDAsync_v2
+      0.0            29443          3     9814.3     6926.0      1578     20939       9998.4  cuCtxSetCurrent     
+
+[4/6] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)                                   Name                                  
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  -----------------------------------------------------------------------
+    100.0      53804314077    1612482   33367.4   36381.5      6055    287197      27106.4  solve_jacobi_147(double *, double *, int, int, double, int &, double &)
+
+[5/6] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count   Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)           Operation          
+ --------  ---------------  ------  --------  --------  --------  --------  -----------  ----------------------------
+     64.8       1128466634  806240    1399.7    1320.0      1251     21717        260.1  [CUDA memcpy Device-to-Host]
+     35.2        614029586  806241     761.6     676.0       642     22394        350.3  [CUDA memset]               
+      0.0           170897       1  170897.0  170897.0    170897    170897          0.0  [CUDA memcpy Host-to-Device]
+
+[6/6] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count   Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)           Operation          
+ ----------  ------  --------  --------  --------  --------  -----------  ----------------------------
+      6.450  806241     0.000     0.000     0.000     0.000        0.000  [CUDA memset]               
+      6.450  806240     0.000     0.000     0.000     0.000        0.000  [CUDA memcpy Device-to-Host]
+      2.097       1     2.097     2.097     2.097     2.097        0.000  [CUDA memcpy Host-to-Device]
+
+Generated:
+	/home/mihey/Theory_of_Parallelism/task 6/results/nsys_N512_iter1000000_gpu.nsys-rep
+	/home/mihey/Theory_of_Parallelism/task 6/results/nsys_N512_iter1000000_gpu.sqlite

@@ -1,0 +1,13 @@
+=== Rebuild heat_opt_gpu (fix: both buffers on device) ===
+make: Nothing to be done for '/home/mihey/Theory_of_Parallelism/task 6/build/heat_opt_gpu'.
+=== Benchmark GPU opt only ===
+gpu opt N=128: iterations=30074 error=9.999803e-07 time_sec=3.641889
+gpu opt N=256: iterations=102885 error=9.999302e-07 time_sec=13.945059
+gpu opt N=512: iterations=339599 error=9.999842e-07 time_sec=60.519550
+Wrote /home/mihey/Theory_of_Parallelism/task 6/results/timing_gpu.csv
+Traceback (most recent call last):
+  File "/home/mihey/Theory_of_Parallelism/task 6/scripts/plot_results.py", line 41, in <module>
+    main()
+  File "/home/mihey/Theory_of_Parallelism/task 6/scripts/plot_results.py", line 16, in main
+    by_var.setdefault(r["variant"], []).append((int(r["N"]), float(r["time_sec"])))
+ValueError: invalid literal for int() with base 10: 'N'

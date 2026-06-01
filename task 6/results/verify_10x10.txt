@@ -1,5 +1,6 @@
+=== 10x10 grid ===
 variant=optimized N=10
-iterations=234 error=9.434872e-07 time_sec=0.000260
+iterations=234 error=9.434872e-07 time_sec=0.000026
 
 --- grid 10x10 ---
  10.0000  11.1111  12.2222  13.3333  14.4444  15.5556  16.6667  17.7778  18.8889  20.0000

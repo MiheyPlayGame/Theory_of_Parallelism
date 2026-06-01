@@ -1,0 +1,1 @@
+iterations=339599 error=9.999842e-07 time_sec=67.380473
