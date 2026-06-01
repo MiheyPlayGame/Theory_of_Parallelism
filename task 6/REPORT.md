@@ -102,10 +102,6 @@ NVIDIA **Nsight Systems** (`nsys profile`).
 
 **Примечание:** при сборке `g++ -fopenacc` этап 1→2 на 512×512 давал ~233 с → ~118 с (~2×). После перехода на **nvc++** выигрыш от «opt» проявляется на **GPU** (этап 3), а не на `-acc=host`.
 
-**Nsight (этап 4):** timeline с CUDA API и kernel-регионами OpenACC; профиль до полной сходимости. Отчёт: `.qdrep` / `.sqlite`.
-
-**Скриншоты Nsight:** открыть `results/nsys_N512_iter1000000_gpu.qdrep` в Nsight Systems GUI и приложить к отчёту (timeline, CUDA API, kernel regions).
-
 ---
 
 ## Диаграмма оптимизации
